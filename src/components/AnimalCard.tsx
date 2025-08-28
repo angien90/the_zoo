@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import type { Animal } from "../models/Animal";
-import { useAnimalStatus } from "../hooks/useAnimalStatus";
+import { useAnimalStatusReducer } from "../reducers/useAnimalStatusReducer";
 import { CareStatus } from "../components/CareStatus";
-import "../pages/Animals.css";
+import "../pages/Animals.scss";
 
 interface AnimalCardProps {
   animal: Animal;
@@ -12,8 +12,8 @@ interface AnimalCardProps {
 // Mat: 0-3h = happy, 3-4h = warning, >4 = alert | canFeed = true om >=4
 // Klapp: 0-2h = happy, 2-3h = warning, >3 = alert | canPet = true om >=3
 export const AnimalCard = ({ animal }: AnimalCardProps) => {
-  const feed = useAnimalStatus(animal.id, "lastFed", { happy: 4, warning: 3 });
-  const pet = useAnimalStatus(animal.id, "lastPetted", { happy: 3, warning: 2 });
+  const feed = useAnimalStatusReducer(animal.id, "lastFed", { happy: 4, warning: 3 });
+  const pet = useAnimalStatusReducer(animal.id, "lastPetted", { happy: 3, warning: 2 });
 
   return (
     <div className="animal-card">

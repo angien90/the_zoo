@@ -1,0 +1,147 @@
+// Variabler
+$primary: #c48e5c;
+$light: #fff3e0;
+$dark: #5D5C38;
+$shadow-light: rgba(0, 0, 0, 0.1);
+$container-radius: 20px;
+$card-radius: 15px;
+$transition-fast: 0.2s ease;
+
+// Wrapper
+.home-container {
+  background: rgba(255, 248, 230, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: $container-radius;
+  width: 90%;
+  max-width: 1200px;
+  min-height: 750px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3rem auto;
+  box-shadow: 0 8px 20px $shadow-light;
+  animation: fadeIn 0.5s ease-in-out;
+  gap: 2rem;
+
+  // Toppsektionen
+  .home-top {
+    text-align: center;
+    align-content: center;
+
+    h2 {
+      font-size: 3rem;
+      margin: 0 0 0.5rem 0;
+      color: $primary;
+      text-shadow: 2px 2px $light;
+    }
+
+    p {
+      font-size: 1.5rem;
+      color: $dark;
+      font-weight: bold;
+      margin-top: 0;
+    }
+  }
+
+  // Kort-sektionen
+  .home-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    justify-content: center;
+    max-width: 900px;
+    margin: 0 auto;
+
+    .home-card {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+      background-color: $light;
+      padding: 1.5rem;
+      border-radius: $card-radius;
+      box-shadow: 0 5px 15px $shadow-light;
+      transition: transform $transition-fast, box-shadow $transition-fast;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px $shadow-light;
+      }
+
+      h2 {
+        color: $primary;
+        text-transform: uppercase;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  // Favoritlista
+  .favorites {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    font-size: 1.1rem;
+
+    li {
+      margin: 0.5rem 0;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+  }
+}
+
+// Keyframes
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsivitet
+@media (max-width: 600px) {
+  .home-container {
+    width: 85%;
+    padding: 10px;
+    margin-top: 20px;
+
+    .home-top {
+      h2 {
+        font-size: 2rem;
+        padding: 0 2rem;
+      }
+      p {
+        font-size: 1.1rem;
+      }
+    }
+
+    .home-sections {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-bottom: 20px;
+
+      .home-card {
+        width: 100%;
+      }
+    }
+  }
+}

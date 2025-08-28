@@ -1,3 +1,6 @@
+//Används inte längre då jag gick över till Reducers!!
+
+/*
 import { useEffect, useState } from "react";
 import { getAnimalData, saveAnimalData } from "../helpers/localStorage";
 
@@ -51,3 +54,4 @@ export const useAnimalStatus = (
 
   return { status, canAct, hoursSince, lastAction, update };
 };
+*/

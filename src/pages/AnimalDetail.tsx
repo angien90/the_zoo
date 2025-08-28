@@ -1,56 +1,33 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import type { Animal } from "../models/Animal";
-import { useAnimalStatus } from "../hooks/useAnimalStatus";
 import { CareStatus } from "../components/CareStatus";
-import "./AnimalDetail.css";
+import { useAnimal } from "../hooks/useAnimal";
+import { useAnimalCare } from "../hooks/useAnimalCare";
+import "./AnimalDetail.scss";
 
 export const AnimalDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const [animal, setAnimal] = useState<Animal | null>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch("/animals.json")
-      .then((res) => res.json())
-      .then((data: Animal[]) => {
-        const found = data.find((a) => a.id === Number(id));
-        setAnimal(found || null);
-      });
-  }, [id]);
-
-  // Hook för mat och klappning
-  // Mat: 0-2h = happy, 2-3h = warning, >3 = alert | canFeed = true om >=3
-  // Klapp: 0-1h = happy, 1-2h = warning, >2 = alert | canPet = true om >=2
-  const feed = useAnimalStatus(Number(id), "lastFed", { happy: 3, warning: 2 });
-  const pet = useAnimalStatus(Number(id), "lastPetted", { happy: 2, warning: 1 });
+  const animal = useAnimal(id);
+  const care = useAnimalCare(animal);
 
   if (!animal) return <p>Hittade inte djuret.</p>;
 
-  // Formaterar tid till YYYY-MM-DD HH:MM:SS
+  const feedStatus = care!.getStatus(care!.lastFed, { happy: 3, warning: 2 });
+  const petStatus = care!.getStatus(care!.lastPetted, { happy: 2, warning: 1 });
+
   const formatTime = (timestamp: number | null) => {
-    if (!timestamp) return "Aldrig";
+    if (!timestamp) return "Aldrig - Var försiktig!";
     const d = new Date(timestamp);
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    const dd = String(d.getDate()).padStart(2, "0");
-    const hh = String(d.getHours()).padStart(2, "0");
-    const min = String(d.getMinutes()).padStart(2, "0");
-    const ss = String(d.getSeconds()).padStart(2, "0");
-    return `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`;
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}:${String(d.getSeconds()).padStart(2,"0")}`;
   };
 
   return (
     <div className="animal-detail">
       <div className="animal-detail-card">
         <button onClick={() => navigate("/animals")} className="back-button">⬅ Tillbaka</button>
-
         <h2>{animal.name}</h2>
-        <img
-          src={animal.imageUrl}
-          alt={animal.name}
-          onError={(e) => {(e.target as HTMLImageElement).src = "src/assets/safe_image.webp";}}
-        />
+        <img src={animal.imageUrl} alt={animal.name} onError={(e) => (e.target as HTMLImageElement).src = "src/assets/safe_image.webp"} />
 
         <section className="animal-info">
           <h3>Vem är {animal.name}?</h3>
@@ -59,27 +36,27 @@ export const AnimalDetail = () => {
           <div className="taking-care-of">
             <span>
               <h3>Fick mat senast;</h3>
-              <p>{feed.hoursSince !== Infinity ? formatTime(feed.lastAction) : "Inte matat ännu"}</p>
+              <p>{formatTime(care!.lastFed)}</p>
               <CareStatus
                 animalName={animal.name}
-                status={feed.status}
+                status={feedStatus.status}
                 type="feed"
-                onAction={feed.update}
+                onAction={care!.updateFeed}
                 buttonLabel={`Mata ${animal.name}`}
-                canAct={feed.canAct}
+                canAct={feedStatus.canAct}
               />
             </span>
 
             <span>
               <h3>Blev klappad senast;</h3>
-              <p>{pet.hoursSince !== Infinity ? formatTime(pet.lastAction) : "Inte klappad ännu"}</p>
+              <p>{formatTime(care!.lastPetted)}</p>
               <CareStatus
                 animalName={animal.name}
-                status={pet.status}
+                status={petStatus.status}
                 type="pet"
-                onAction={pet.update}
+                onAction={care!.updatePet}
                 buttonLabel={`Klappa ${animal.name}`}
-                canAct={pet.canAct}
+                canAct={petStatus.canAct}
               />
             </span>
           </div>

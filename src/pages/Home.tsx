@@ -1,4 +1,4 @@
-import "./Home.css";
+import "./Home.scss";
 import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
@@ -18,7 +18,7 @@ export const Home = () => {
         </section>
 
         <section className="home-card">
-          <h2>Matningsutmaning</h2>
+          <h2>Utmaningen</h2>
           <p>Kan du ge alla djur mat och klappa dem innan dagens slut? ⏰</p>
           <button className="feed-button" onClick={() => navigate("/animals")}>Starta utmaningen</button>
         </section>

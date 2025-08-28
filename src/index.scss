@@ -1,0 +1,68 @@
+// Variabler
+$font-primary: "Press Start 2P", cursive, Helvetica, Arial, sans-serif;
+$color-primary: #c48e5c;
+$color-light: #fff3e0;
+$color-dark: #5D5C38;
+$transition-fast: 0.2s ease;
+
+// Global reset
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: $font-primary;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-image: url('./src/assets/feed_animals.webp');
+  background-size: cover;
+  background-position: center;
+}
+
+// Buttons
+button {
+  padding: 0.7rem 1.5rem;
+  background-color: $color-primary;
+  color: white;
+  font-family: $font-primary;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color $transition-fast, transform $transition-fast;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+  }
+
+  &:disabled {
+    background-color: $color-primary;
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    filter: blur(0.7px);
+  }
+}
+
+// Media queries
+@media (max-width: 600px) {
+  button {
+    font-size: 1rem;
+  }
+}
