@@ -1,0 +1,194 @@
+.animals-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+  width: 90%;
+  max-width: 1200px;
+  min-height: 75vh;
+  margin: 3rem auto;
+  border-radius: 20px;
+  background: rgba(255, 248, 230, 0.8);
+  backdrop-filter: blur(10px);          
+  -webkit-backdrop-filter: blur(10px); 
+}
+
+.animals-title {
+  font-size: 3rem;
+  color: #c48e5c;
+  text-shadow: 2px 2px #fff;
+  margin-top: 0;
+  text-align: center;
+}
+
+.animals-container {
+  display: flex;
+  gap: 2rem;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  overflow: hidden; 
+  width: 100%;
+  justify-content: space-between; 
+  overflow: hidden;  
+}
+
+/* Kort för respektive djur */
+.animal-card {
+  background-color: #fff3e0;
+  border-radius: 20px;
+  padding: 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  scroll-snap-align: start;
+  flex: 0 0 calc(50% - 1rem);
+  box-sizing: border-box;
+}
+
+.animal-card h2 {
+  margin: 0;
+  padding-bottom: 20px;
+  color: #c48e5c;
+  text-transform: uppercase;
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+.animal-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.animal-card p {
+  font-size: 1rem;
+  padding-top: 0;
+}
+
+.animal-card a {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Karusellen */
+.carousel-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.animals-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 20px;
+  padding: 20px 0;
+  scroll-snap-type: x mandatory;
+  overflow: hidden;
+}
+
+.animals-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-button {
+  background: none;
+  border: none;
+  font-size: 3rem;
+  cursor: pointer;
+  z-index: 10;
+  text-shadow: 0px 2px #fff;
+  color: #c48e5c;
+  padding: 8px;
+}
+
+.carousel-button:focus {
+  outline: none;
+}
+
+/* Progressbar */
+.carousel-progress-paws {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 1.2rem;
+}
+
+.paw {
+  opacity: 0.2;
+  transition: opacity 0.2s ease;
+}
+
+.paw.filled {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+
+/*Färger på mat och klapp klockan */
+.happy {
+  color: #2e7d32;
+  font-weight: bold;
+  margin: 0.3rem 0;
+}
+
+.warning {
+  color: #f9a825;
+  font-weight: bold;
+  margin: 0.3rem 0;
+}
+
+.alert {
+  color: #d32f2f;
+  font-weight: bold;
+  margin: 0.3rem 0;
+}
+
+
+@media (max-width: 800px) {
+  .animals-container {
+      grid-template-columns: 1fr;
+      padding: 1rem;
+      gap: 1.5rem;
+  }
+
+  .animals-title {
+    font-size: 2rem;
+    padding: 30px 10px 0;
+    margin-bottom: 0;
+  }
+  
+  .animal-card {
+    flex: 0 0 100%;
+    padding: 1rem;
+  }
+
+  .animal-card img {
+  width: 90%;
+  }
+
+  .animal-card p {
+  font-size: 1rem;
+  }
+
+  .animal-card a {
+  margin-top: 0;
+  }
+
+  .carousel-button {
+    font-size: 1.5rem;
+  }
+
+  .carousel-progress-paws {
+    margin-bottom: 20px;
+  }
+}
