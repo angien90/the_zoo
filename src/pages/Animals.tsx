@@ -1,19 +1,20 @@
+import { useContext } from "react";
+import { AnimalContext } from "../contexts/AnimalContext";
 import { useCarousel } from "../hooks/useCarousel";
-import { useAnimals } from "../hooks/useAnimals";
 import { AnimalsCarousel } from "../components/AnimalsCarousel";
-import "./Animals.scss";
+import "../pages/Animals.scss";
+
+
 
 export const Animals = () => {
-  // Hooken returnerar carouselRef och state
-  const { carouselRef, state } = useAnimals();
+  const { animals, carouselRef } = useContext(AnimalContext);
 
-  // Använd useCarousel för scroll-logik
   const { currentPage, totalPages, scrollLeft, scrollRight, handleScroll } = useCarousel({
     containerRef: carouselRef,
-    totalItems: state.animals.length,
-    cardsPerPage: state.cardsPerPage,
-    cardWidth: state.cardWidth,
-    gap: 32, // gap är required
+    totalItems: animals.length,
+    cardsPerPage: 2,
+    cardWidth: 300,
+    gap: 32,
   });
 
   return (
@@ -21,16 +22,12 @@ export const Animals = () => {
       <h2 className="animals-title">Hjälp oss ta hand om våra djur</h2>
 
       <AnimalsCarousel
-        animals={state.animals}
-        carouselRef={carouselRef}
+        currentPage={currentPage}
+        totalPages={totalPages}
         scrollLeft={scrollLeft}
         scrollRight={scrollRight}
         handleScroll={handleScroll}
-        currentPage={currentPage}
-        totalPages={totalPages}
       />
     </div>
   );
 };
-
-export default Animals;

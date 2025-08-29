@@ -1,5 +1,6 @@
 // Komponent som visar status för ett djurs välmående
 
+import { AnimationButton } from "../components/AnimationButton"; 
 // Typ för statusen som kan visas
 export type Status = "happy" | "warning" | "alert";
 
@@ -19,10 +20,10 @@ export const CareStatus = ({ animalName, status, type, onAction, buttonLabel, ca
   const messages: Record<Status, string> = {
     happy: type === "feed"
       ? `😃 ${animalName} är mätt och belåten! 😃`
-      : `😃 ${animalName} har fått sin kärlek! 😃`,
+      : `😃 ${animalName} har fått sitt gos! 😃`,
     
     warning: type === "feed"
-      ? `⚠️ ${animalName} blir snart hungrig! ⚠️`
+      ? `⚠️ ${animalName} börjar bli hungrig! ⚠️`
       : `⚠️ ${animalName} börjar bli kelsjuk! ⚠️`,
     
     alert: type === "feed"
@@ -34,9 +35,9 @@ export const CareStatus = ({ animalName, status, type, onAction, buttonLabel, ca
     <>
       <p className={status}>{messages[status]}</p>
       {onAction && buttonLabel && (
-        <button className="love-button" onClick={onAction} disabled={!canAct}>
+        <AnimationButton className="love-button" onClick={onAction} disabled={!canAct}>
           {buttonLabel}
-        </button>
+        </AnimationButton>
       )}
     </>
   );

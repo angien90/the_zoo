@@ -7,13 +7,7 @@ export const Layout = () => {
   const { state, dispatch, carouselRef } = useAnimals();
 
   return (
-    <AnimalContext.Provider
-      value={{
-        animals: state.animals,
-        dispatch,
-        carouselRef,
-      }}
-    >
+    <AnimalContext.Provider value={{ animals: state.animals, dispatch, carouselRef }}>
       <div className="app-wrapper">
         <header>
           <h1>The Zoo 🐾</h1>

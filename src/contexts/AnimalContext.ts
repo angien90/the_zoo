@@ -8,10 +8,12 @@ export type AnimalContextType = {
   animals: Animal[];
   dispatch: React.Dispatch<Action>;
   carouselRef: React.RefObject<HTMLDivElement | null>;
+  cardsPerPage: number;
 };
 
 export const AnimalContext = createContext<AnimalContextType>({
   animals: [],
   dispatch: () => {}, // tom funktion som default
   carouselRef: React.createRef<HTMLDivElement>(), 
+  cardsPerPage: 2,
 });

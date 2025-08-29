@@ -11,12 +11,15 @@ interface AnimalCardProps {
   animal: Animal;
 }
 
-// AnimalCard-komponenten visar info om ett djur i kortvy
+// Visar info om ett djur på Animals.tsx sidan
 export const AnimalCard = ({ animal }: AnimalCardProps) => {
-  // Hook för att hantera matstatus
-  // Kan mata djuret efter 5h (canAct), visar varning efter 4h (warning)
+  // Indikation på att djuret snart behöver mat efter 3 timmar
+  // Knappen blir klickbar efter 3 timmar inne i AnimalDetail
+  // Djuret ska ha mat efter 5h
   const feed = useAnimalStatus(animal.id, "lastFed", { canAct: 5, warning: 3 });
-  // Kan klappa djuret efter 3h, visar varning efter 2h 
+  // Indikation på att djuret snart behöver klappas efter 2 timmar
+  // Knappen blir klickbar efter 2 timmar inne i AnimalDetail
+  // Djuret ska bli klappad efter 4h
   const pet = useAnimalStatus(animal.id, "lastPetted", { canAct: 4, warning: 2 });
 
   return (

@@ -21,6 +21,7 @@ export interface StatusResult {
   status: Status;
   lastAction: number | null;
   canAct: boolean;
+  canClickEarly?: boolean;
   update: () => void;
 }
 
@@ -35,7 +36,8 @@ const getStatus = (hoursSince: number, thresholds: Thresholds): Status => {
 export const useAnimalStatus = (
   animalId: number,
   key: "lastFed" | "lastPetted",
-  thresholds: Thresholds
+  thresholds: Thresholds,
+  options?: { canClickEarly?: boolean } 
 ): StatusResult => {
   const [lastAction, setLastAction] = useState<number | null>(null);
 
@@ -55,8 +57,11 @@ export const useAnimalStatus = (
   // Beräkna timmar sedan senaste handling
   const hoursSince = lastAction ? (Date.now() - lastAction) / (1000 * 60 * 60) : Infinity;
 
-  const canAct = hoursSince >= thresholds.canAct;
+  // Status logik
   const status = getStatus(hoursSince, thresholds);
 
-  return { status, lastAction, canAct, update };
+  // Om canClickEarly är true, blir knappen klickbar direkt
+  const canAct = options?.canClickEarly ? true : hoursSince >= thresholds.canAct;
+
+  return { status, lastAction, canAct, update, canClickEarly: options?.canClickEarly  };
 };

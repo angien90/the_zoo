@@ -1,5 +1,3 @@
-// Hooken håller all logik för att karusellen ska fungera
-
 import { useState } from "react";
 
 interface UseCarouselProps {
@@ -7,7 +5,7 @@ interface UseCarouselProps {
   totalItems: number;
   cardsPerPage: number;
   cardWidth: number;
-  gap: number; // lägg till gap
+  gap?: number; 
 }
 
 export const useCarousel = ({
@@ -15,23 +13,24 @@ export const useCarousel = ({
   totalItems,
   cardsPerPage,
   cardWidth,
-  gap,
+  gap = 32,
 }: UseCarouselProps) => {
   const [currentPage, setCurrentPage] = useState(0);
-  const totalPages = totalItems > 0 ? Math.ceil(totalItems / cardsPerPage) : 0;
-  const lastPageIndex = totalPages > 0 ? totalPages - 1 : 0;
+
+  const totalPages = Math.ceil(totalItems / cardsPerPage);
+  const lastPageIndex = totalPages - 1;
 
   const scrollToPage = (page: number) => {
-    if (!containerRef.current || cardWidth === 0) return;
+    if (!containerRef.current) return;
 
-    let scrollPos = 0;
+    let scrollPos = page * (cardsPerPage * cardWidth + (cardsPerPage - 1) * gap);
 
+    // Justera för sista sidan så att den stannar vid sista kortet
     if (page === lastPageIndex) {
-      // sista sidan: räkna antalet kort som ska visas
-      const cardsOnLastPage = totalItems % cardsPerPage || cardsPerPage;
-      scrollPos = (totalItems - cardsOnLastPage) * (cardWidth + gap);
-    } else {
-      scrollPos = page * cardsPerPage * (cardWidth + gap);
+      const remainingCards = totalItems % cardsPerPage || cardsPerPage;
+      scrollPos =
+        containerRef.current.scrollWidth -
+        (remainingCards * cardWidth + (remainingCards - 1) * gap);
     }
 
     containerRef.current.scrollTo({ left: scrollPos, behavior: "smooth" });
@@ -49,18 +48,12 @@ export const useCarousel = ({
   };
 
   const handleScroll = () => {
-    if (!containerRef.current || cardWidth === 0) return;
-
-    const approxPage = containerRef.current.scrollLeft / ((cardWidth + gap) * cardsPerPage);
+    if (!containerRef.current) return;
+    const approxPage =
+      containerRef.current.scrollLeft / (cardsPerPage * cardWidth + (cardsPerPage - 1) * gap);
     const page = Math.round(approxPage);
     if (page !== currentPage) setCurrentPage(page);
   };
 
-  return {
-    currentPage,
-    totalPages,
-    scrollLeft,
-    scrollRight,
-    handleScroll,
-  };
+  return { currentPage, totalPages, scrollLeft, scrollRight, handleScroll, scrollToPage };
 };

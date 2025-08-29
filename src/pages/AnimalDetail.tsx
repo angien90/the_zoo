@@ -9,18 +9,16 @@ export const AnimalDetail = () => {
   const navigate = useNavigate();
   const numericId = Number(id);
 
+  // Hämta djuret
   const animal = useAnimalDetail(numericId);
-
-
-  const feedStatus = useAnimalStatus(animal?.id ?? 0, "lastFed", {
-  canAct: 4,
-  warning: 3
-  });
-
-  const petStatus = useAnimalStatus(animal?.id ?? 0, "lastPetted", {
-    canAct: 3,
-    warning: 2
-  });
+  // Indikation på att djuret snart behöver matas efter 3 timmar
+  // Knappen blir klickbar efter 3 timmar
+  // Djuret ska ha mat efter 4h
+  const feedStatus = useAnimalStatus(animal?.id ?? 0, "lastFed", { canAct: 4, warning: 3 }, { canClickEarly: true });
+  // Indikation på att djuret snart behöver klappas efter 2 timmar
+  // Knappen blir klickbar efter 2 timmar
+  // Djuret ska bli klappad efter 3h
+  const petStatus = useAnimalStatus(animal?.id ?? 0, "lastPetted", { canAct: 3, warning: 2 }, { canClickEarly: true });
 
   // Hjälpfunktion för att formatera datum
   const formatTime = (date: string | number | Date) => {
@@ -28,6 +26,10 @@ export const AnimalDetail = () => {
   };
 
   if (!animal) return <p>Djur hittades inte</p>;
+
+  // Knapp-logik: kan bara klickas om djuret är hungrigt/kelsjuk (status !== "happy") och canAct är true
+  const feedCanAct = feedStatus.status !== "happy" && feedStatus.canAct;
+  const petCanAct = petStatus.status !== "happy" && petStatus.canAct;
 
   return (
     <div className="animal-detail">
@@ -55,7 +57,7 @@ export const AnimalDetail = () => {
                 type="feed"
                 onAction={feedStatus.update}
                 buttonLabel={`Mata ${animal.name}`}
-                canAct={feedStatus.canAct}
+                canAct={feedCanAct}
               />
             </span>
 
@@ -68,7 +70,7 @@ export const AnimalDetail = () => {
                 type="pet"
                 onAction={petStatus.update}
                 buttonLabel={`Klappa ${animal.name}`}
-                canAct={petStatus.canAct}
+                canAct={petCanAct}
               />
             </span>
           </div>

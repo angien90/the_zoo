@@ -1,39 +1,35 @@
-// Komponent för att visa djurkort i karusell
-// Tar emot alla värden via props
-
-import type { RefObject } from "react";
-import type { Animal } from "../models/Animal";
+import { useContext } from "react";
+import { AnimalContext } from "../contexts/AnimalContext";
 import { AnimalCard } from "./AnimalCard";
+import "../pages/Animals.scss";
 
 interface AnimalsCarouselProps {
-  animals: Animal[];
-  carouselRef: RefObject<HTMLDivElement | null>;
+  currentPage: number;
+  totalPages: number;
   scrollLeft: () => void;
   scrollRight: () => void;
   handleScroll: () => void;
-  currentPage: number;
-  totalPages: number;
 }
 
-export const AnimalsCarousel: React.FC<AnimalsCarouselProps> = ({
-  animals,
-  carouselRef,
+export const AnimalsCarousel = ({
+  currentPage,
+  totalPages,
   scrollLeft,
   scrollRight,
   handleScroll,
-  currentPage,
-  totalPages,
-}) => {
+}: AnimalsCarouselProps) => {
+  const { animals, carouselRef } = useContext(AnimalContext);
+
   return (
     <>
       <section className="carousel-wrapper">
-        <button className="carousel-button" onClick={scrollLeft} aria-label="Föregående djur">⬅</button>
+        <button className="carousel-button left" onClick={scrollLeft}>⬅</button>
 
         <div className="animals-carousel" ref={carouselRef} onScroll={handleScroll}>
           {animals.map(a => <AnimalCard key={a.id} animal={a} />)}
         </div>
 
-        <button className="carousel-button" onClick={scrollRight} aria-label="Nästa djur">➡</button>
+        <button className="carousel-button right" onClick={scrollRight}>➡</button>
       </section>
 
       <div className="carousel-progress-paws">
