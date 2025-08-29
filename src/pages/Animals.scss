@@ -46,11 +46,6 @@ $transition-fast: 0.3s ease;
     flex: 0 0 calc(50% - 1rem);
     box-sizing: border-box;
 
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px $shadow-light;
-    }
-
     h2 {
       margin: 0;
       padding-bottom: 20px;
@@ -67,10 +62,6 @@ $transition-fast: 0.3s ease;
       border-radius: 15px;
       margin-bottom: 1rem;
       transition: transform $transition-fast;
-
-      &:hover {
-        transform: scale(1.05);
-      }
     }
 
     p {

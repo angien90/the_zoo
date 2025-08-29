@@ -1,14 +1,22 @@
+// Hooken håller all logik för att karusellen ska fungera
+
 import { useState } from "react";
-import type { RefObject } from "react";
 
 interface UseCarouselProps {
+  containerRef: React.RefObject<HTMLDivElement | null>;
   totalItems: number;
   cardsPerPage: number;
   cardWidth: number;
-  containerRef: RefObject<HTMLDivElement | null>;
+  gap: number; // lägg till gap
 }
 
-export const useCarousel = ({ containerRef, totalItems, cardsPerPage, cardWidth }: UseCarouselProps) => {
+export const useCarousel = ({
+  containerRef,
+  totalItems,
+  cardsPerPage,
+  cardWidth,
+  gap,
+}: UseCarouselProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const totalPages = totalItems > 0 ? Math.ceil(totalItems / cardsPerPage) : 0;
   const lastPageIndex = totalPages > 0 ? totalPages - 1 : 0;
@@ -16,19 +24,14 @@ export const useCarousel = ({ containerRef, totalItems, cardsPerPage, cardWidth 
   const scrollToPage = (page: number) => {
     if (!containerRef.current || cardWidth === 0) return;
 
-    const cards = containerRef.current.querySelectorAll(".animal-card");
-    if (cards.length === 0) return;
-
     let scrollPos = 0;
 
     if (page === lastPageIndex) {
+      // sista sidan: räkna antalet kort som ska visas
       const cardsOnLastPage = totalItems % cardsPerPage || cardsPerPage;
-      const lastCardsWidth = Array.from(cards)
-        .slice(-cardsOnLastPage)
-        .reduce((sum, card) => sum + (card as HTMLElement).offsetWidth + 32, 0);
-      scrollPos = containerRef.current.scrollWidth - lastCardsWidth;
+      scrollPos = (totalItems - cardsOnLastPage) * (cardWidth + gap);
     } else {
-      scrollPos = page * cardsPerPage * cardWidth;
+      scrollPos = page * cardsPerPage * (cardWidth + gap);
     }
 
     containerRef.current.scrollTo({ left: scrollPos, behavior: "smooth" });
@@ -47,7 +50,8 @@ export const useCarousel = ({ containerRef, totalItems, cardsPerPage, cardWidth 
 
   const handleScroll = () => {
     if (!containerRef.current || cardWidth === 0) return;
-    const approxPage = containerRef.current.scrollLeft / (cardWidth * cardsPerPage);
+
+    const approxPage = containerRef.current.scrollLeft / ((cardWidth + gap) * cardsPerPage);
     const page = Math.round(approxPage);
     if (page !== currentPage) setCurrentPage(page);
   };

@@ -39,7 +39,6 @@ $transition-fast: 0.2s ease;
     p {
       font-size: 1.5rem;
       color: $dark;
-      font-weight: bold;
       margin-top: 0;
     }
   }
@@ -63,11 +62,6 @@ $transition-fast: 0.2s ease;
       border-radius: $card-radius;
       box-shadow: 0 5px 15px $shadow-light;
       transition: transform $transition-fast, box-shadow $transition-fast;
-
-      &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px $shadow-light;
-      }
 
       h2 {
         color: $primary;

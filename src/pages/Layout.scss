@@ -5,7 +5,6 @@ $color-dark: #5D5C38;
 $transition-fast: 0.2s ease-in-out;
 $header-height: 90px;
 
-// Wrapper
 .app-wrapper {
   display: flex;
   flex-direction: column;
@@ -34,7 +33,7 @@ header {
     text-transform: uppercase;
   }
 
-  // Navigation
+  // Navigation i header
   nav {
     ul {
       font-size: 1.5rem;

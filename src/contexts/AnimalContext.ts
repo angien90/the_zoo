@@ -1,10 +1,17 @@
-import { createContext } from "react";
-import type { AnimalItem } from "../models/AnimalItem";
+// Används för att dela data om djur globalt i appen utan att behöva skicka props genom flera komponenter.
 
-type AnimalContextType = {
-  animal: AnimalItem[];
+import React, { createContext } from "react";
+import type { Animal } from "../models/Animal";
+import type { Action } from "../hooks/useAnimals";
+
+export type AnimalContextType = {
+  animals: Animal[];
+  dispatch: React.Dispatch<Action>;
+  carouselRef: React.RefObject<HTMLDivElement | null>;
 };
 
 export const AnimalContext = createContext<AnimalContextType>({
-  animal: [],
+  animals: [],
+  dispatch: () => {}, // tom funktion som default
+  carouselRef: React.createRef<HTMLDivElement>(), 
 });

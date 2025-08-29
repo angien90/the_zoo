@@ -1,3 +1,5 @@
+// Används för att ladda ner Animals från API:t till animals.json
+
 import fs from "fs";
 import fetch from "node-fetch";
 

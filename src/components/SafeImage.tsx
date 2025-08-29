@@ -1,3 +1,5 @@
+// Används då en bild saknas i API:t
+
 import React from "react";
 
 type Props = {

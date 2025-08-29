@@ -7,6 +7,8 @@ export type Animal = {
     shortDescription: string;
     longDescription: string;
     medicine: string; 
-    isFed: string;
+    isFed: boolean;
     lastFed: number;
+    isPetted: boolean; 
+    lastPetted: number; 
 };

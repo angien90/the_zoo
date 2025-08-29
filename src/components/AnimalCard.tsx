@@ -1,19 +1,23 @@
+// Komponent för hur ett djur visas på Animals.tsx sidan
+
 import { Link } from "react-router-dom";
 import type { Animal } from "../models/Animal";
-import { useAnimalStatusReducer } from "../reducers/useAnimalStatusReducer";
+import { useAnimalStatus } from "../reducers/AnimalStatusReducer";
 import { CareStatus } from "../components/CareStatus";
 import "../pages/Animals.scss";
 
+// Props-typ för AnimalCard-komponenten
 interface AnimalCardProps {
   animal: Animal;
 }
 
-// Hook för mat och klappning
-// Mat: 0-3h = happy, 3-4h = warning, >4 = alert | canFeed = true om >=4
-// Klapp: 0-2h = happy, 2-3h = warning, >3 = alert | canPet = true om >=3
+// AnimalCard-komponenten visar info om ett djur i kortvy
 export const AnimalCard = ({ animal }: AnimalCardProps) => {
-  const feed = useAnimalStatusReducer(animal.id, "lastFed", { happy: 4, warning: 3 });
-  const pet = useAnimalStatusReducer(animal.id, "lastPetted", { happy: 3, warning: 2 });
+  // Hook för att hantera matstatus
+  // Kan mata djuret efter 5h (canAct), visar varning efter 4h (warning)
+  const feed = useAnimalStatus(animal.id, "lastFed", { canAct: 5, warning: 3 });
+  // Kan klappa djuret efter 3h, visar varning efter 2h 
+  const pet = useAnimalStatus(animal.id, "lastPetted", { canAct: 4, warning: 2 });
 
   return (
     <div className="animal-card">
@@ -31,13 +35,15 @@ export const AnimalCard = ({ animal }: AnimalCardProps) => {
         status={feed.status}
         type="feed"
         onAction={feed.update}
+        canAct={feed.canAct}
       />
 
       <CareStatus
         animalName={animal.name}
         status={pet.status}
-        type="pet" 
+        type="pet"
         onAction={pet.update}
+        canAct={pet.canAct}
       />
 
       <Link to={`/animals/${animal.id}`}>

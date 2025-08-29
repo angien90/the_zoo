@@ -1,5 +1,9 @@
+// Komponent som visar status för ett djurs välmående
+
+// Typ för statusen som kan visas
 export type Status = "happy" | "warning" | "alert";
 
+// Props som CareStatus-komponenten kan ta emot
 export interface CareStatusProps {
     animalName: string;
     status: Status;
@@ -10,6 +14,7 @@ export interface CareStatusProps {
     canAct?: boolean;
 }
 
+// CareStatus-komponenten visar statusmeddelanden och ev. knapp
 export const CareStatus = ({ animalName, status, type, onAction, buttonLabel, canAct }: CareStatusProps) => {
   const messages: Record<Status, string> = {
     happy: type === "feed"
