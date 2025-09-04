@@ -11,7 +11,8 @@ import { animalsReducer } from "../reducers/animalsReducer";
 export type Action =
   | { type: "SET_ANIMALS"; payload: Animal[] }
   | { type: "SET_CARDS_PER_PAGE"; payload: number }
-  | { type: "SET_CARD_WIDTH"; payload: number };
+  | { type: "SET_CARD_WIDTH"; payload: number }
+  | { type: "RESET_FEEDING"; payload: number };
 
 // Hook för djurdata
 export const useAnimals = () => {

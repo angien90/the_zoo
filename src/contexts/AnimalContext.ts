@@ -8,7 +8,7 @@ export type AnimalContextType = {
   animals: Animal[];
   dispatch: React.Dispatch<Action>;
   carouselRef: React.RefObject<HTMLDivElement | null>;
-  cardsPerPage: number;
+  cardsPerPage?: number;
 };
 
 export const AnimalContext = createContext<AnimalContextType>({
