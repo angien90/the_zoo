@@ -21,6 +21,10 @@ export const router = createBrowserRouter([
         path: "/animals/:id",
         element: <AnimalDetail />,
       },
-    ],
+      ],
+    },
+  ],
+  {
+    basename: import.meta.env.DEV ? "" : "the_zoo/",
   },
-]);
+);
