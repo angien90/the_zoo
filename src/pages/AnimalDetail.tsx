@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { CareStatus } from "../components/CareStatus";
 import { useAnimalDetail } from "../hooks/useAnimalDetail";
 import { useAnimalStatus } from "../reducers/AnimalStatusReducer";
+import safeImage from '../assets/safe_image.webp';
 import "./AnimalDetail.scss";
 
 export const AnimalDetail = () => {
@@ -40,7 +41,7 @@ export const AnimalDetail = () => {
         <img
           src={animal.imageUrl}
           alt={animal.name}
-          onError={(e) => (e.target as HTMLImageElement).src = "/safe_image.webp"}
+          onError={(e) => (e.target as HTMLImageElement).src = safeImage}
         />
 
         <section className="animal-info">

@@ -1,6 +1,7 @@
 // Används då en bild saknas i API:t
 
 import React from "react";
+import safeImage from '../assets/safe_image.webp';
 
 type Props = {
   src: string;
@@ -16,7 +17,7 @@ export const SafeImage: React.FC<Props> = ({ src, alt, className }) => {
       src={imgSrc}
       alt={alt}
       className={className}
-      onError={() => setImgSrc("/safe_image.webp")}
+      onError={() => setImgSrc(safeImage)} // fallback till importerad bild
     />
   );
 };

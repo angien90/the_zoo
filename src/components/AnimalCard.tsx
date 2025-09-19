@@ -5,6 +5,7 @@ import type { Animal } from "../models/Animal";
 import { useAnimalStatus } from "../reducers/AnimalStatusReducer";
 import { CareStatus } from "../components/CareStatus";
 import "../pages/Animals.scss";
+import safeImage from '../assets/safe_image.webp';
 
 // Props-typ för AnimalCard-komponenten
 interface AnimalCardProps {
@@ -28,9 +29,7 @@ export const AnimalCard = ({ animal }: AnimalCardProps) => {
       <img
         src={animal.imageUrl}
         alt={animal.name}
-        onError={(e) => {
-          (e.target as HTMLImageElement).src = "/safe_image.webp";
-        }}
+        onError={(e) => (e.target as HTMLImageElement).src = safeImage}
       />
 
       <CareStatus
