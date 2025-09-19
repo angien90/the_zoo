@@ -14,16 +14,24 @@ export const Animals = () => {
 
   // Hantera scrollning och uppdatering av sidan
   const scrollLeft = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
+  const newPage = currentPage > 1 ? currentPage - 1 : totalPages;
+  setCurrentPage(newPage);
+
+  carouselRef.current?.scrollTo({
+    left: (newPage - 1) * (300 + 32) * 2, // (kortbredd + gap) * 2 kort per sida
+    behavior: "smooth",
+  });
+};
 
   const scrollRight = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+  const newPage = currentPage < totalPages ? currentPage + 1 : 1;
+  setCurrentPage(newPage);
+
+  carouselRef.current?.scrollTo({
+    left: (newPage - 1) * (300 + 32) * 2,
+    behavior: "smooth",
+  });
+};
 
   // Scrollhantering vid användarinteraktion
   const handleScroll = () => {
