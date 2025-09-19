@@ -1,21 +1,50 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AnimalContext } from "../contexts/AnimalContext";
-import { useCarousel } from "../hooks/useCarousel";
 import { AnimalsCarousel } from "../components/AnimalsCarousel";
 import "../pages/Animals.scss";
-
-
 
 export const Animals = () => {
   const { animals, carouselRef } = useContext(AnimalContext);
 
-  const { currentPage, totalPages, scrollLeft, scrollRight, handleScroll } = useCarousel({
-    containerRef: carouselRef,
-    totalItems: animals.length,
-    cardsPerPage: 2,
-    cardWidth: 300,
-    gap: 32,
-  });
+  // Lokala states för sidhantering
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Beräkna antalet sidor baserat på antalet djur
+  const totalPages = Math.ceil(animals.length / 2); // Antal sidor beroende på 2 kort per sida
+
+  // Hantera scrollning och uppdatering av sidan
+  const scrollLeft = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const scrollRight = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // Scrollhantering vid användarinteraktion
+  const handleScroll = () => {
+    const scrollPosition = carouselRef.current?.scrollLeft || 0;
+    const scrollWidth = carouselRef.current?.scrollWidth || 0;
+    const clientWidth = carouselRef.current?.clientWidth || 0;
+    
+    // Om vi är nära slutet, uppdatera sidan
+    if (scrollPosition + clientWidth >= scrollWidth) {
+      if (currentPage < totalPages) {
+        setCurrentPage(currentPage + 1);
+      }
+    }
+
+    // Om vi är nära början, uppdatera sidan
+    if (scrollPosition <= 0) {
+      if (currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+      }
+    }
+  };
 
   return (
     <div className="animals-page">
@@ -27,6 +56,7 @@ export const Animals = () => {
         scrollLeft={scrollLeft}
         scrollRight={scrollRight}
         handleScroll={handleScroll}
+        carouselRef={carouselRef}
       />
     </div>
   );
