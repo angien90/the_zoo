@@ -16,7 +16,7 @@ export const SafeImage: React.FC<Props> = ({ src, alt, className }) => {
       src={imgSrc}
       alt={alt}
       className={className}
-      onError={() => setImgSrc("src/assets/safe_image.webp")}
+      onError={() => setImgSrc("/safe_image.webp")}
     />
   );
 };

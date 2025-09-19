@@ -40,7 +40,7 @@ export const AnimalDetail = () => {
         <img
           src={animal.imageUrl}
           alt={animal.name}
-          onError={(e) => (e.target as HTMLImageElement).src = "src/assets/safe_image.webp"}
+          onError={(e) => (e.target as HTMLImageElement).src = "/safe_image.webp"}
         />
 
         <section className="animal-info">

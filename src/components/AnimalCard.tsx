@@ -29,7 +29,7 @@ export const AnimalCard = ({ animal }: AnimalCardProps) => {
         src={animal.imageUrl}
         alt={animal.name}
         onError={(e) => {
-          (e.target as HTMLImageElement).src = "src/assets/safe_image.webp";
+          (e.target as HTMLImageElement).src = "/safe_image.webp";
         }}
       />
 
