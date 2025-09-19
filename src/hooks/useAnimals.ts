@@ -26,7 +26,7 @@ export const useAnimals = () => {
 
   // Hämta djurdata från JSON
   useEffect(() => {
-    fetch("animals.json")
+    fetch("/the_zoo/animals.json")
       .then(res => res.json())
       .then((data: Animal[]) => dispatch({ type: "SET_ANIMALS", payload: data }))
       .catch(console.error);
