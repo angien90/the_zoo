@@ -16,7 +16,7 @@ genom olika css-tekniker som ni har lärt er.
 På djursidan kommer det att finnas en knapp för att mata ett djur. Följande regler gäller för matningen av ett djur:
 
 - Om ett djur inte har fått mat på fyra timmar skall knappen Mata gå att klicka på.
-- Om ett djur har fått mat inom fyra timmar skall knappen vara oklickbar.
+- Om ett djur har fått mat inom fyra timmar skall knappen vara ej klickbar.
 - När ett djur inte har fått mat på tre timmar skall en indikation på att djuret snart behöver matas visas.
 
 På översiktssidan för djuren skall det också vara synligt om ett djur är mätt, hungrigt eller i desperat behov av mat. 
